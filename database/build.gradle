@@ -1,4 +1,31 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'rxfirebase'
+
+    publishedGroupId = 'com.kokaba.rxfirebase'
+    libraryName = 'RxFirebase'
+    artifact = 'database'
+
+    libraryDescription = 'Simple Rx wrapper for firebase database'
+
+    siteUrl = 'https://github.com/Lovrenc/RxFirebase'
+    gitUrl = 'https://github.com/Lovrenc/RxFirebase.git'
+
+    libraryVersion = '0.1.0-alpha'
+
+    developerId = 'lovrenc'
+    developerName = 'Lovrenc Gregorcic'
+    developerEmail = 'lovro.gregorcic+jcentral@gmail.com'
+
+    licenseName = 'MIT'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
 
 buildscript {
     repositories {
@@ -48,3 +75,6 @@ dependencies {
 }
 
 apply plugin: 'me.tatarka.retrolambda'
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

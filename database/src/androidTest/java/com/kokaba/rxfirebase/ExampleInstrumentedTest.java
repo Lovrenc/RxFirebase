@@ -1,4 +1,4 @@
-package com.kokaba.firebasemiyagi;
+package com.kokaba.rxfirebase;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

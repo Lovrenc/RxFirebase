@@ -1,1 +1,1 @@
-include ':app', ':firebasemiyagi'
+include ':app', ':database'

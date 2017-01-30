@@ -1,4 +1,4 @@
-package com.kokaba.firebasemiyagi.base;
+package com.kokaba.rxfirebase.base;
 
 import android.support.annotation.IntDef;
 

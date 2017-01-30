@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.kokaba.firebasemiyagi.FirebaseHelper;
+import com.kokaba.rxfirebase.FirebaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 

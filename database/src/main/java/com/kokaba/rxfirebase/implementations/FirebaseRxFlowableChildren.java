@@ -1,12 +1,11 @@
-package com.kokaba.firebasemiyagi.implementations;
+package com.kokaba.rxfirebase.implementations;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.kokaba.firebasemiyagi.base.FirebaseEvent;
-import com.kokaba.firebasemiyagi.base.FirebaseRxBaseFlowable;
+import com.kokaba.rxfirebase.base.FirebaseEvent;
+import com.kokaba.rxfirebase.base.FirebaseRxBaseFlowable;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;

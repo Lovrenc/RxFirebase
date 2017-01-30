@@ -1,15 +1,14 @@
-package com.kokaba.firebasemiyagi.implementations;
+package com.kokaba.rxfirebase.implementations;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.kokaba.firebasemiyagi.base.FirebaseRxBaseSingle;
+import com.kokaba.rxfirebase.base.FirebaseRxBaseSingle;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import io.reactivex.Single;
 

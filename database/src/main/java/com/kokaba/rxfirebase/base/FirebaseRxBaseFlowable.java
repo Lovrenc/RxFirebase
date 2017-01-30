@@ -1,7 +1,6 @@
-package com.kokaba.firebasemiyagi.base;
+package com.kokaba.rxfirebase.base;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
 
 import io.reactivex.Flowable;
 

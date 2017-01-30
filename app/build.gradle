@@ -41,7 +41,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.google.firebase:firebase-database:10.0.1'
     testCompile 'junit:junit:4.12'
-    compile project(path: ':firebasemiyagi')
+    compile project(path: ':database')
 }
 
 apply plugin: 'com.google.gms.google-services'

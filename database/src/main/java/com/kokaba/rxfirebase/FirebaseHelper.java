@@ -1,10 +1,10 @@
-package com.kokaba.firebasemiyagi;
+package com.kokaba.rxfirebase;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.kokaba.firebasemiyagi.implementations.FirebaseRxFlowableChildren;
-import com.kokaba.firebasemiyagi.implementations.FirebaseRxSingle;
-import com.kokaba.firebasemiyagi.implementations.FirebaseRxSingleChildren;
+import com.kokaba.rxfirebase.implementations.FirebaseRxFlowableChildren;
+import com.kokaba.rxfirebase.implementations.FirebaseRxSingle;
+import com.kokaba.rxfirebase.implementations.FirebaseRxSingleChildren;
 
 public class FirebaseHelper {
 
