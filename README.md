@@ -7,8 +7,7 @@ This small library simplifies (some) of the basic Firebase database queries.
 FirebaseHelper class gives you several simple different listener functions. Here is an example of usage of one of them:
 
 
-```
-#!java
+```java
 
 FirebaseHelper helper = new FirebaseHelper();
 
