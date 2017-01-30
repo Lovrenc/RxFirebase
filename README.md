@@ -24,3 +24,22 @@ FirebaseHelper helper = new FirebaseHelper();
 
 
 The library enables you to simply read what is in database (example above), listen to events, read values of children, sorting and filtering.
+
+
+# Installation
+
+Add repository url to your gradle build file:
+
+```gradle
+maven {
+    url 'https://dl.bintray.com/lovrenc/maven/'
+}
+```
+
+Add dependency:
+
+```gradle
+dependencies {
+    compile 'com.kokaba.rxfirebase:database:0.1.0-alpha'
+}
+```
