@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 public class FirebaseRxSingle<DataModel> extends FirebaseRxBaseSingle<DataModel, Map<String, DataModel>> {
 
@@ -22,29 +24,37 @@ public class FirebaseRxSingle<DataModel> extends FirebaseRxBaseSingle<DataModel,
 
     @Override
     public Single<Map<String, DataModel>> toRx() {
-        return Single.create(e -> mReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        return Single.create(
+            new SingleOnSubscribe<Map<String, DataModel>>() {
+                @Override
+                public void subscribe(final SingleEmitter<Map<String, DataModel>> e) throws Exception {
+                    mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                try {
-                    Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                    HashMap<String, DataModel> result = new HashMap<String, DataModel>();
+                            try {
+                                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                                HashMap<String, DataModel> result = new HashMap<String, DataModel>();
 
-                    while (iterator.hasNext()) {
-                        DataSnapshot fbChild = iterator.next();
-                        result.put(fbChild.getKey(), fbChild.getValue(mDataModelClass));
-                    }
-                    e.onSuccess(result);
-                } catch (Exception ex) {
-                    e.onError(ex);
+                                while (iterator.hasNext()) {
+                                    DataSnapshot fbChild = iterator.next();
+                                    result.put(fbChild.getKey(), fbChild.getValue(mDataModelClass));
+                                }
+                                e.onSuccess(result);
+                            } catch (Exception ex) {
+                                e.onError(ex);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            e.onError(new Exception(databaseError.getMessage()));
+                        }
+                    });
                 }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                e.onError(new Exception(databaseError.getMessage()));
-            }
-        }));
+            });
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.kokaba.rxfirebase.FirebaseHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseHelper helper = new FirebaseHelper();
+        FirebaseHelper helper = new FirebaseHelper(FirebaseDatabase.getInstance().getReference());
 
         helper.getChildren(SampleData.class, "sample_data")
             .orderByChild("surname")

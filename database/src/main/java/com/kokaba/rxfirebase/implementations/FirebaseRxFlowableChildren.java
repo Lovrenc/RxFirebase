@@ -9,6 +9,8 @@ import com.kokaba.rxfirebase.base.FirebaseRxBaseFlowable;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.android.MainThreadDisposable;
 
 
@@ -27,44 +29,47 @@ public class FirebaseRxFlowableChildren<DataModel> extends FirebaseRxBaseFlowabl
      * @return
      */
     public Flowable<FirebaseEvent<DataModel>> toRx(BackpressureStrategy backpressureStrategy) {
-        Flowable<FirebaseEvent<DataModel>> flowable =  Flowable.create(e -> {
-
-            ChildEventListener listener = new ChildEventListener() {
+        Flowable<FirebaseEvent<DataModel>> flowable =  Flowable.create(
+            new FlowableOnSubscribe<FirebaseEvent<DataModel>>() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    e.onNext(new FirebaseEvent<DataModel>(FirebaseEvent.ADDED, dataSnapshot.getValue(mDataModelClass)));
+                public void subscribe(final FlowableEmitter<FirebaseEvent<DataModel>> e) throws Exception {
+                    final ChildEventListener listener = new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            e.onNext(new FirebaseEvent<DataModel>(FirebaseEvent.ADDED, dataSnapshot.getValue(mDataModelClass)));
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            e.onNext(new FirebaseEvent<DataModel>(FirebaseEvent.CHANGED, dataSnapshot.getValue(mDataModelClass)));
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            e.onNext(new FirebaseEvent<DataModel>(FirebaseEvent.REMOVED, dataSnapshot.getValue(mDataModelClass)));
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            e.onError(new Exception(databaseError.getMessage()));
+                        }
+                    };
+
+                    e.setDisposable(new MainThreadDisposable() {
+                        @Override
+                        protected void onDispose() {
+                            mReference.removeEventListener(listener);
+                        }
+                    });
+
+                    mReference.addChildEventListener(listener);
                 }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    e.onNext(new FirebaseEvent<DataModel> (FirebaseEvent.CHANGED, dataSnapshot.getValue(mDataModelClass)));
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    e.onNext(new FirebaseEvent<DataModel> (FirebaseEvent.REMOVED, dataSnapshot.getValue(mDataModelClass)));
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    e.onError(new Exception(databaseError.getMessage()));
-                }
-            };
-
-            e.setDisposable(new MainThreadDisposable() {
-                @Override
-                protected void onDispose() {
-                    mReference.removeEventListener(listener);
-                }
-            });
-
-            mReference.addChildEventListener(listener);
-        }, backpressureStrategy);
+            }, backpressureStrategy);
 
         return flowable;
     }

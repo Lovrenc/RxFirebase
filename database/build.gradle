@@ -32,9 +32,6 @@ buildscript {
         mavenCentral()
     }
 
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
-    }
 }
 
 // Required because retrolambda is on maven central
@@ -51,12 +48,18 @@ android {
         defaultConfig {
             minSdkVersion 19
             targetSdkVersion 25
+
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         }
+
+
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
+
 }
 
 dependencies {
@@ -64,17 +67,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
     //Firebase library
-    compile 'com.google.firebase:firebase-core:10.0.1'
     //Reactive extendions
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.4'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'org.jetbrains:annotations-java5:15.0'
+    testCompile 'junit:junit:4.12'
 }
-
-apply plugin: 'me.tatarka.retrolambda'
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply plugin: 'com.google.gms.google-services'

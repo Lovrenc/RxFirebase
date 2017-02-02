@@ -6,9 +6,17 @@ import com.kokaba.rxfirebase.implementations.FirebaseRxFlowableChildren;
 import com.kokaba.rxfirebase.implementations.FirebaseRxSingle;
 import com.kokaba.rxfirebase.implementations.FirebaseRxSingleChildren;
 
+import org.jetbrains.annotations.NotNull;
+
+
 public class FirebaseHelper {
 
-    private final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private final DatabaseReference mDatabase;
+
+    public FirebaseHelper(DatabaseReference mDatabase) {
+        this.mDatabase = mDatabase;
+    }
+
 
 
     /**
@@ -20,7 +28,7 @@ public class FirebaseHelper {
      * @param <T> Class of the Model
      * @return
      */
-    public <T> FirebaseRxFlowableChildren<T> listenToValues(Class<T> dataModelClass, String key, String... subKeys) {
+    public <T> FirebaseRxFlowableChildren<T> listenToValues(Class<T> dataModelClass, @NotNull String key, String... subKeys) {
         DatabaseReference reference = mDatabase.child(key);
 
         for(int i = 0; i < subKeys.length; i++) {

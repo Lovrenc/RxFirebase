@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 
 public class FirebaseRxSingleChildren<DataModel> extends FirebaseRxBaseSingle<DataModel, List<DataModel>> {
@@ -22,23 +24,27 @@ public class FirebaseRxSingleChildren<DataModel> extends FirebaseRxBaseSingle<Da
 
     @Override
     public Single<List<DataModel>> toRx() {
-        return Single.<List<DataModel>>create(e -> {
-            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        return Single.<List<DataModel>>create(
+            new SingleOnSubscribe<List<DataModel>>() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<DataModel> elements = new ArrayList<>();
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                    for(DataSnapshot data: children) {
-                        elements.add(data.getValue(mDataModelClass));
-                    }
-                    e.onSuccess(elements);
-                }
+                public void subscribe(final SingleEmitter<List<DataModel>> e) throws Exception {
+                    mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            List<DataModel> elements = new ArrayList<>();
+                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                            for (DataSnapshot data : children) {
+                                elements.add(data.getValue(mDataModelClass));
+                            }
+                            e.onSuccess(elements);
+                        }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    e.onError(new Exception(databaseError.getMessage()));
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            e.onError(new Exception(databaseError.getMessage()));
+                        }
+                    });
                 }
             });
-        });
     }
 }
