@@ -28,13 +28,7 @@ The library enables you to simply read what is in database (example above), list
 
 # Installation
 
-Add repository url to your gradle build file:
-
-```gradle
-maven {
-    url 'https://dl.bintray.com/lovrenc/maven/'
-}
-```
+Library is hosted on JCenter.
 
 Add dependency:
 
